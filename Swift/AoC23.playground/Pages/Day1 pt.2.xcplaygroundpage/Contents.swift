@@ -12,19 +12,16 @@ zoneight234
 7pqrstsixteen
 """
 
-let wordMap:[String] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-
-let dataUrl = Bundle.main.url(forResource: "day1", withExtension: "txt")!
-let data = String(data: Data.init(contentsOf: dataUrl), encoding: .utf8)!
+let wordMap: [String] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
 extension String {
     static let calibrationValueRegex = try! NSRegularExpression(pattern: "[0-9]|(\(wordMap.joined(separator: ")|(")))")
-    
+
     var calibrationValue: Int {
         let matches = String.calibrationValueRegex.matches(in: self, options: .reportCompletion, range: NSRange(location: 0, length: count))
-        
+
         guard !matches.isEmpty else { return 0 }
-        
+
         let firstString = String(NSString(string: self).substring(with: matches.first!.range))
         let lastString = String(NSString(string: self).substring(with: matches.last!.range))
         var firstInt = wordMap.firstIndex { $0 == firstString } ?? Int(firstString) ?? 0
@@ -32,7 +29,8 @@ extension String {
         return Int("\(firstInt)\(lastInt)") ?? 0
     }
 }
-    
+
+let data = stringFromResource(named: "day1")!
 let answer = data.components(separatedBy: .newlines)
     .reduce(0) { partialResult, substring in
         partialResult + String(substring).calibrationValue

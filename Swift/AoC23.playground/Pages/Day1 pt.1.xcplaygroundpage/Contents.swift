@@ -9,9 +9,6 @@ a1b2c3d4e5f
 treb7uchet
 """
 
-let dataUrl = Bundle.main.url(forResource: "day1", withExtension: "txt")!
-let data = String(data: Data.init(contentsOf: dataUrl), encoding: .utf8)!
-
 extension String {
     var calibrationValue: Int {
         let charSet = CharacterSet.decimalDigits
@@ -20,7 +17,8 @@ extension String {
         return Int("\(filtered.first!)\(filtered.last!)") ?? 0
     }
 }
-    
+
+let data = stringFromResource(named: "day1")!
 let answer = data.components(separatedBy: .newlines)
     .reduce(0) { partialResult, substring in
         partialResult + String(substring).calibrationValue
